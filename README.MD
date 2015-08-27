@@ -19,6 +19,9 @@ If a rule being applied with applyStop() fails the validation, the remaining val
 The most typical case where you would use applyStop instead of applyRule is when the input is a required field. There is
 no reason to check if a string is max 15 characters or if the string is a valid email if the field is required.
 
+NOTE: applyStop() only affects the current item being validated. It will not stop other variables from being verified.
+This is by design to a visitor to your application can see all of the input errors at once.
+
 ## Example Usage
 
 ```php
