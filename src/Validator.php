@@ -32,6 +32,11 @@ class Validator
     private $itemValue;
 
     /**
+     * @var int
+     */
+    private $itemTotalRulesApplied;
+
+    /**
      * @var array
      */
     private $messages = array();
@@ -59,6 +64,7 @@ class Validator
         $this->itemStopApplyingRules = false;
         $this->itemLabel = $itemLabel;
         $this->itemValue = $itemValue;
+        $this->itemTotalRulesApplied = 0;
 
         return $this;
     }
@@ -122,6 +128,8 @@ class Validator
             $message = str_replace('{option1}', $options, $message);
             $this->messages[] = $message;
         }
+
+        $this->itemTotalRulesApplied++;
     }
 
     /**
@@ -146,5 +154,13 @@ class Validator
     public function getMessages()
     {
         return $this->messages;
+    }
+
+    /**
+     * @return int
+     */
+    public function getItemTotalRulesApplied()
+    {
+        return $this->itemTotalRulesApplied;
     }
 }
