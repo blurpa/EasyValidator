@@ -11,4 +11,9 @@ abstract class Rule
         return $this->message;
     }
 
+    public function setMessage($message)
+    {
+        $this->message = $message;
+    }
+
 }

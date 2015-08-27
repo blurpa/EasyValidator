@@ -3,8 +3,9 @@
 namespace Blurpa\EasyValidator\Rules;
 
 use Blurpa\EasyValidator\Rule;
+use Blurpa\EasyValidator\RuleInterface;
 
-class Email extends Rule
+class Email extends Rule implements RuleInterface
 {
     protected $message = 'The email field is an invalid format.';
 

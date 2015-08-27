@@ -3,6 +3,7 @@
 namespace Blurpa\EasyValidator;
 
 use Blurpa\EasyValidator\RuleNotFoundException;
+use Blurpa\EasyValidator\Item;
 
 class Validator
 {
@@ -12,46 +13,41 @@ class Validator
     private $validationStatus;
 
     /**
-     * @var bool
+     * @var Item[]
      */
-    private $itemValidationStatus;
-
-    /**
-     * @var bool
-     */
-    private $itemStopApplyingRules;
+    private $items = array();
 
     /**
      * @var string
      */
-    private $itemLabel;
-
-    /**
-     * @var mixed
-     */
-    private $itemValue;
-
-    /**
-     * @var int
-     */
-    private $itemTotalRulesApplied;
-
-    /**
-     * @var array
-     */
-    private $messages = array();
+    private $currentKey;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->validationStatus = true;
-
+        $this->setValidationStatus(true);
     }
 
     /**
-     * Initializes the validation parameters of the given $label
+     * @param bool $status
+     */
+    public function setValidationStatus($status)
+    {
+        $this->validationStatus = $status;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getValidationStatus()
+    {
+        return $this->validationStatus;
+    }
+
+    /**
+     * Initializes the validation parameters of the given $itemLabel
      *
      * @param string $itemLabel
      * @param string $itemValue
@@ -60,11 +56,9 @@ class Validator
      */
     public function validate($itemLabel, $itemValue)
     {
-        $this->itemValidationStatus = true;
-        $this->itemStopApplyingRules = false;
-        $this->itemLabel = $itemLabel;
-        $this->itemValue = $itemValue;
-        $this->itemTotalRulesApplied = 0;
+        $this->currentKey = $itemLabel;
+        $item = new Item($itemLabel, $itemValue);
+        $this->items[$itemLabel] = $item;
 
         return $this;
     }
@@ -77,7 +71,8 @@ class Validator
      */
     public function applyRule($ruleName, $options = '')
     {
-        $this->processRule($ruleName, $options);
+        $item = $this->items[$this->currentKey];
+        $this->processRule($item, $ruleName, $options);
 
         return $this;
     }
@@ -90,25 +85,26 @@ class Validator
      */
     public function applyStop($ruleName, $options = '')
     {
-        $this->processRule($ruleName, $options);
+        $item = $this->items[$this->currentKey];
+        $this->processRule($item, $ruleName, $options);
 
-        if ($this->itemValidationStatus === false) {
-            $this->itemStopApplyingRules = true;
+        if ($item->getValidationStatus() === false) {
+            $item->setStopRules(true);
         }
 
         return $this;
     }
 
     /**
-     *
-     * @throws RuleNotFoundException when no rule is found.
-     *
+     * @param Item $item
      * @param string $ruleName
      * @param string $options
+     *
+     * @throws RuleNotFoundException when no rule is found.
      */
-    private function processRule($ruleName, $options)
+    private function processRule(Item $item, $ruleName, $options)
     {
-        if ($this->itemStopApplyingRules) {
+        if ($item->stopRules()) {
             return;
         }
 
@@ -118,34 +114,41 @@ class Validator
             throw new RuleNotFoundException;
         }
 
+        /**
+         * @var \Blurpa\EasyValidator\RuleInterface $rule
+         */
         $rule = new $ruleName;
-        if (!$rule->validate($this->itemValue, $options)) {
-            $this->validationStatus = false;
-            $this->itemValidationStatus = false;
+        if (!$rule->validate($item->getItemValue(), $options)) {
+            $this->setValidationStatus(false);
+            $item->setValidationStatus(false);
 
             $message = $rule->getMessage();
-            $message = str_replace('{label}', $this->itemLabel, $message);
+            $message = str_replace('{label}', $item->getItemLabel(), $message);
             $message = str_replace('{option1}', $options, $message);
-            $this->messages[] = $message;
+            $item->setMessage($message);
         }
 
-        $this->itemTotalRulesApplied++;
+        $item->incrementRuleCount();
     }
 
     /**
+     * @param string $itemLabel
+     *
      * @return bool
      */
-    public function getStatus()
+    public function getItemStatus($itemLabel)
     {
-        return $this->validationStatus;
+        return $this->items[$itemLabel]->getValidationStatus();
     }
 
     /**
-     * @return bool
+     * @param string $itemLabel
+     *
+     * @return array
      */
-    public function getRecentItemStatus()
+    public function getItemMessages($itemLabel)
     {
-        return $this->itemValidationStatus;
+        return $this->items[$itemLabel]->getMessages();
     }
 
     /**
@@ -153,14 +156,13 @@ class Validator
      */
     public function getMessages()
     {
-        return $this->messages;
-    }
+        $messages = array();
+        foreach ($this->items as $item) {
+            foreach ($item->getMessages() as $message) {
+                $messages[] = $message;
+            }
+        }
 
-    /**
-     * @return int
-     */
-    public function getItemTotalRulesApplied()
-    {
-        return $this->itemTotalRulesApplied;
+        return $messages;
     }
 }

@@ -3,8 +3,9 @@
 namespace Blurpa\EasyValidator\Rules;
 
 use Blurpa\EasyValidator\Rule;
+use Blurpa\EasyValidator\RuleInterface;
 
-class IP extends Rule
+class IP extends Rule implements RuleInterface
 {
     protected $message = 'The ip address is an invalid format.';
 
