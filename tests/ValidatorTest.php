@@ -9,15 +9,31 @@ class testRouter extends \PHPUnit_Framework_TestCase
      */
     protected $v;
 
-    public function testTrueIsTrue()
-    {
-        $value = true;
-        $this->assertTrue($value);
-    }
-
-    public function setUp()
+    protected function setUp()
     {
         $this->v = new \Blurpa\EasyValidator\Validator();
+    }
+
+
+    public function testMultipleRules()
+    {
+        $this->v->validate('test', 'testValue')
+            ->applyRule('Required')
+            ->applyRule('Number', 5)
+            ->applyRule('Number');
+
+        $this->assertEquals(3, $this->v->getItemTotalRulesApplied());
+    }
+
+    public function testStopOnFail()
+    {
+        $this->v->validate('test', 'testValue')
+            ->applyRule('Required')
+            ->applyStop('Number')
+            ->applyRule('MinNumber', 5)
+            ->applyRule('MinNumber', 2);
+
+        $this->assertEquals(2, $this->v->getItemTotalRulesApplied());
     }
 
     /**
