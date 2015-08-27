@@ -17,23 +17,23 @@ class testRouter extends \PHPUnit_Framework_TestCase
 
     public function testMultipleRules()
     {
-        $this->v->validate('test', 'testValue')
+        $this->v->validate('testMultipleRules', 'testValue')
             ->applyRule('Required')
             ->applyRule('Number', 5)
             ->applyRule('Number');
 
-        $this->assertEquals(3, $this->v->getItemTotalRulesApplied());
+        $this->assertEquals(3, $this->v->getItemRuleCount('testMultipleRules'));
     }
 
     public function testStopOnFail()
     {
-        $this->v->validate('test', 'testValue')
+        $this->v->validate('testStop', 'testValue')
             ->applyRule('Required')
             ->applyStop('Number')
             ->applyRule('MinNumber', 5)
             ->applyRule('MinNumber', 2);
 
-        $this->assertEquals(2, $this->v->getItemTotalRulesApplied());
+        $this->assertEquals(2, $this->v->getItemRuleCount('testStop'));
     }
 
     /**
@@ -45,10 +45,14 @@ class testRouter extends \PHPUnit_Framework_TestCase
      */
     public function testMinNumber($expected, $minNumber, $number)
     {
-        $this->v->validate('test', $number)->applyRule('MinNumber', $minNumber);
-        $test = $this->v->getRecentItemStatus();
+        $testLabel = 'testMinNumber';
+        $this->v->validate($testLabel, $number)->applyRule('MinNumber', $minNumber);
+
+        $test = $this->v->getItemStatus($testLabel);
+        $test2 = $this->v->getValidationStatus();
 
         $this->assertEquals($expected, $test);
+        $this->assertEquals($expected, $test2);
     }
 
     public function minNumberData()
@@ -68,9 +72,9 @@ class testRouter extends \PHPUnit_Framework_TestCase
      */
     public function testEmail($expected, $email)
     {
-        $this->v->validate('test', $email)->applyRule('Email');
+        $this->v->validate('testEmail', $email)->applyRule('Email');
 
-        $this->assertEquals($expected, $this->v->getRecentItemStatus());
+        $this->assertEquals($expected, $this->v->getValidationStatus());
     }
 
     public function emailData()
