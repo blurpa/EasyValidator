@@ -4,13 +4,13 @@ namespace Blurpa\EasyValidator\Rules;
 
 use Blurpa\EasyValidator\Rule;
 
-class Email extends Rule
+class IP extends Rule
 {
-    protected $message = 'The email field is an invalid format.';
+    protected $message = 'The ip address is an invalid format.';
 
     public function validate($item, $options)
     {
-        if (!filter_var($item, FILTER_VALIDATE_EMAIL)) {
+        if (!filter_var($item, FILTER_VALIDATE_IP)) {
             return false;
         } else
         {

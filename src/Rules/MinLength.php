@@ -1,13 +1,12 @@
 <?php
 
-namespace Blurpa\EasyAuthentication\Rules;
+namespace Blurpa\EasyValidator\Rules;
 
-class MinLength
+use Blurpa\EasyValidator\Rule;
+
+class MinLength extends Rule
 {
-    public function getErrorMessage()
-    {
-        return 'The (*) field must be (**) characters or more.';
-    }
+    protected $message = 'The {label} field must be {option1} characters or more.';
 
     public function validate($item, $minLength)
     {

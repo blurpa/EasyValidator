@@ -1,13 +1,12 @@
 <?php
 
-namespace Blurpa\EasyAuthentication\Rules;
+namespace Blurpa\EasyValidator\Rules;
+
+use Blurpa\EasyValidator\Rule;
 
 class MinNumber
 {
-    public function getErrorMessage()
-    {
-        return 'The (*) field must be greater than or equal to (**).';
-    }
+    protected $message = 'The {label} field must be greater than or equal to {option1}.';
 
     public function validate($item, $minNumber)
     {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Blurpa\EasyAuthentication\Rules;
+namespace Blurpa\EasyValidator\Rules;
 
-use Blurpa\EasyAuthentication\Rule;
+use Blurpa\EasyValidator\Rule;
 
 class Number extends Rule
 {

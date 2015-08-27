@@ -1,13 +1,12 @@
 <?php
 
-namespace Blurpa\EasyAuthentication\Rules;
+namespace Blurpa\EasyValidator\Rules;
 
-class Required
+use Blurpa\EasyValidator\Rule;
+
+class Required extends Rule
 {
-    public function getErrorMessage()
-    {
-        return 'The {*} field is required.';
-    }
+    protected $message = 'The {label} field is required.';
 
     public function validate($item, $options)
     {

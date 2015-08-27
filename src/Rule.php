@@ -1,6 +1,6 @@
 <?php
 
-namespace Blurpa\EasyAuthentication;
+namespace Blurpa\EasyValidator;
 
 abstract class Rule
 {

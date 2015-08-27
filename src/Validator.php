@@ -1,84 +1,132 @@
 <?php
 
-namespace Blurpa\EasyAuthentication;
+namespace Blurpa\EasyValidator;
 
 class Validator
 {
+    /**
+     * @var bool
+     */
+    private $validationStatus;
 
-    private $validated;
+    /**
+     * @var bool
+     */
+    private $itemValidationStatus;
 
-    private $itemValidated;
+    /**
+     * @var bool
+     */
     private $itemStopApplyingRules;
-    private $fieldName;
-    private $item;
 
+    /**
+     * @var string
+     */
+    private $itemLabel;
 
-    private $errors = array();
+    /**
+     * @var mixed
+     */
+    private $itemValue;
 
+    /**
+     * @var array
+     */
+    private $messages = array();
+
+    /**
+     * Constructor
+     */
     public function __construct()
     {
-        $this->validated = true;
+        $this->validationStatus = true;
 
     }
 
-    public function validate($fieldName, $item)
+    /**
+     * Initializes the validation parameters of the given $label
+     *
+     * @param string $itemLabel
+     * @param string $itemValue
+     *
+     * @return $this
+     */
+    public function validate($itemLabel, $itemValue)
     {
-        $this->itemValidated = true;
+        $this->itemValidationStatus = true;
         $this->itemStopApplyingRules = false;
-        $this->fieldName = $fieldName;
-        $this->item = $item;
+        $this->itemLabel = $itemLabel;
+        $this->itemValue = $itemValue;
 
         return $this;
     }
 
+    /**
+     * @param string $ruleName
+     * @param string $options
+     *
+     * @return $this
+     */
     public function applyRule($ruleName, $options = '')
     {
-        if ($this->itemStopApplyingRules) {
-            return $this;
-        }
-
         $this->processRule($ruleName, $options);
 
         return $this;
     }
 
+    /**
+     * @param string $ruleName
+     * @param string $options
+     *
+     * @return $this
+     */
     public function applyStop($ruleName, $options = '')
     {
-        if ($this->itemStopApplyingRules) {
-            return $this;
-        }
-
         $this->processRule($ruleName, $options);
 
-        if ($this->itemValidated === false) {
+        if ($this->itemValidationStatus === false) {
             $this->itemStopApplyingRules = true;
         }
 
         return $this;
     }
 
+    /**
+     * @param string $ruleName
+     * @param string $options
+     */
     private function processRule($ruleName, $options)
     {
-        $ruleName = '\Blurpa\EasyAuthentication\Rules\\' . $ruleName;
-        $rule = new $ruleName;
-        if (!$rule->validate($this->item, $options)) {
-            $this->validated = false;
-            $this->itemValidated = false;
+        if ($this->itemStopApplyingRules) {
+            return;
+        }
 
-            $errorMessage = $rule->getErrorMessage();
-            $errorMessage = str_replace('(*)', $this->fieldName, $errorMessage);
-            $errorMessage = str_replace('(**)', $options, $errorMessage);
-            $this->errors[] = $errorMessage;
+        $ruleName = '\Blurpa\EasyValidator\Rules\\' . $ruleName;
+        $rule = new $ruleName;
+        if (!$rule->validate($this->itemValue, $options)) {
+            $this->validationStatus = false;
+            $this->itemValidationStatus = false;
+
+            $message = $rule->getMessage();
+            $message = str_replace('{label}', $this->itemLabel, $message);
+            $message = str_replace('{option1}', $options, $message);
+            $this->messages[] = $message;
         }
     }
 
+    /**
+     * @return bool
+     */
     public function getStatus()
     {
-        return $this->validated;
+        return $this->validationStatus;
     }
 
-    public function getErrors()
+    /**
+     * @return array
+     */
+    public function getMessages()
     {
-        return $this->errors;
+        return $this->messages;
     }
 }
