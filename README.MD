@@ -44,7 +44,7 @@ $validator->validate('password', $password)
 $validator->validate('ip', $ip)
     ->applyRule('IP');
 
-var_dump($validator->getStatus());
+var_dump($validator->getValidationStatus());
 var_dump($validator->getMessages());
 ```
 
