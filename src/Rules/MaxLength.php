@@ -10,10 +10,6 @@ class MaxLength extends Rule
 
     public function validate($item, $maxLength)
     {
-        if (strlen($item) > $maxLength) {
-            return false;
-        } else {
-            return true;
-        }
+        return (strlen($item) > $maxLength);
     }
 }

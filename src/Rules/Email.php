@@ -10,11 +10,6 @@ class Email extends Rule
 
     public function validate($item, $options)
     {
-        if (!filter_var($item, FILTER_VALIDATE_EMAIL)) {
-            return false;
-        } else
-        {
-            return true;
-        }
+        return filter_var($item, FILTER_VALIDATE_EMAIL);
     }
 }

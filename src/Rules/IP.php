@@ -10,11 +10,6 @@ class IP extends Rule
 
     public function validate($item, $options)
     {
-        if (!filter_var($item, FILTER_VALIDATE_IP)) {
-            return false;
-        } else
-        {
-            return true;
-        }
+        return filter_var($item, FILTER_VALIDATE_IP);
     }
 }

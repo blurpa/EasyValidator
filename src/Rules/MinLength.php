@@ -10,10 +10,6 @@ class MinLength extends Rule
 
     public function validate($item, $minLength)
     {
-        if (strlen($item) < $minLength) {
-            return false;
-        } else {
-            return true;
-        }
+        return (strlen($item) < $minLength);
     }
 }
