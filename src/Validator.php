@@ -133,6 +133,14 @@ class Validator
     }
 
     /**
+     * @return bool
+     */
+    public function getRecentItemStatus()
+    {
+        return $this->itemValidationStatus;
+    }
+
+    /**
      * @return array
      */
     public function getMessages()
