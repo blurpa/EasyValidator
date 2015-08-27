@@ -135,4 +135,12 @@ class Item
     {
         $this->ruleCount++;
     }
+
+    /**
+     * @return int
+     */
+    public function getRuleCount()
+    {
+        return $this->ruleCount;
+    }
 }

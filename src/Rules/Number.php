@@ -9,7 +9,7 @@ class Number extends Rule implements RuleInterface
 {
     protected $message = 'The {label} field must be a number.';
 
-    public function validate($item)
+    public function validate($item, $options)
     {
         return is_numeric($item);
     }

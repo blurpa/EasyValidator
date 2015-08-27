@@ -142,6 +142,16 @@ class Validator
     }
 
     /**
+     * @param $itemLabel
+     *
+     * @return int
+     */
+    public function getItemRuleCount($itemLabel)
+    {
+        return $this->items[$itemLabel]->getRuleCount();
+    }
+
+    /**
      * @param string $itemLabel
      *
      * @return array
