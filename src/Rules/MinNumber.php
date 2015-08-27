@@ -4,7 +4,7 @@ namespace Blurpa\EasyValidator\Rules;
 
 use Blurpa\EasyValidator\Rule;
 
-class MinNumber
+class MinNumber extends Rule
 {
     protected $message = 'The {label} field must be greater than or equal to {option1}.';
 
