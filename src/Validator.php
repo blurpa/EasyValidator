@@ -2,6 +2,8 @@
 
 namespace Blurpa\EasyValidator;
 
+use Blurpa\EasyValidator\RuleNotFoundException;
+
 class Validator
 {
     /**
@@ -92,6 +94,9 @@ class Validator
     }
 
     /**
+     *
+     * @throws RuleNotFoundException when no rule is found.
+     *
      * @param string $ruleName
      * @param string $options
      */
@@ -102,6 +107,11 @@ class Validator
         }
 
         $ruleName = '\Blurpa\EasyValidator\Rules\\' . $ruleName;
+
+        if (!class_exists($ruleName)) {
+            throw new RuleNotFoundException;
+        }
+
         $rule = new $ruleName;
         if (!$rule->validate($this->itemValue, $options)) {
             $this->validationStatus = false;
