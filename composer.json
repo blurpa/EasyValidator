@@ -2,7 +2,7 @@
     "name": "blurpa/easy-validator",
     "type": "library",
     "description": "A basic and easy to use validation library for PHP",
-    "keywords": ["route","router"],
+    "keywords": ["validate","validator", "validation"],
     "homepage": "https://github.com/blurpa/EasyValidation",
     "license": "MIT",
     "authors": [
