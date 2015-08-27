@@ -1,9 +1,9 @@
 {
-    "name": "blurpa/easy-router",
+    "name": "blurpa/easy-validator",
     "type": "library",
-    "description": "A basic and easy to use router for PHP.",
+    "description": "A basic and easy to use validation library for PHP",
     "keywords": ["route","router"],
-    "homepage": "https://github.com/blurpa/EasyRouter",
+    "homepage": "https://github.com/blurpa/EasyValidation",
     "license": "MIT",
     "authors": [
         {
@@ -21,7 +21,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Blurpa\\EasyRouter\\": "src/"
+            "Blurpa\\EasyValidation\\": "src/"
         }
     }
 }
