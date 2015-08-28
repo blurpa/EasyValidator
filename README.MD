@@ -12,6 +12,7 @@ Current Rule Support List:
 * MinLength (min string length)
 * Number (input is a number)
 * MinNumber (minimum number)
+* MaxNumber (maximum number)
 
 The heart of the library uses the applyStop and applyRule methods. It's important to understand what the differences are.
 
