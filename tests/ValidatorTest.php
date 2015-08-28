@@ -66,6 +66,34 @@ class testRouter extends \PHPUnit_Framework_TestCase
 
     /**
      * @param $expected
+     * @param $maxNumber
+     * @param $number
+     *
+     * @dataProvider maxNumberData
+     */
+    public function testMaxNumber($expected, $maxNumber, $number)
+    {
+        $testLabel = 'testMaxNumber';
+        $this->v->validate($testLabel, $number)->applyRule('MaxNumber', $maxNumber);
+
+        $test = $this->v->getItemStatus($testLabel);
+        $test2 = $this->v->getValidationStatus();
+
+        $this->assertEquals($expected, $test);
+        $this->assertEquals($expected, $test2);
+    }
+
+    public function maxNumberData()
+    {
+        return array(
+            array(true, 5, 5),
+            array(false, 5, 6),
+            array(true, 5, 4)
+        );
+    }
+
+    /**
+     * @param $expected
      * @param $email
      *
      * @dataProvider emailData
