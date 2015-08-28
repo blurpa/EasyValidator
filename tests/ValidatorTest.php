@@ -87,4 +87,41 @@ class testRouter extends \PHPUnit_Framework_TestCase
             array(false, 'test@test@test.com')
         );
     }
+
+
+
+
+    /**
+     * @param $expected
+     * @param $date
+     *
+     * @dataProvider dateData
+     */
+    public function testDate($expected, $date)
+    {
+        $testLabel = 'testDate';
+        $this->v->validate($testLabel, $date)->applyRule('Date');
+
+        $test = $this->v->getItemStatus($testLabel);
+        $test2 = $this->v->getValidationStatus();
+
+        $this->assertEquals($expected, $test);
+        $this->assertEquals($expected, $test2);
+    }
+
+    public function dateData()
+    {
+        return array(
+            array(true, '01/01/1985'),
+            array(true, '12/31/2154'),
+            array(false, '13/31/2015'),
+            array(false, '2/30/2014'),
+            array(true, '02/29/2012'),
+            array(false, '1/02/1985'),
+            array(false, '01/2/1986'),
+            array(false, '01/01'),
+            array(false, '01/01/88'),
+            array(false, '01/01/2014/2014')
+        );
+    }
 }

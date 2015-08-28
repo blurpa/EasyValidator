@@ -13,6 +13,7 @@ Current Rule Support List:
 * Number (input is a number)
 * MinNumber (minimum number)
 * MaxNumber (maximum number)
+* Date (mm/dd/yyyy format)
 
 The heart of the library uses the applyStop and applyRule methods. It's important to understand what the differences are.
 
