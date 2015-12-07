@@ -1,6 +1,6 @@
 <?php
 
-namespace Blurpa\EasyValidator;
+namespace NickStuer\EasyValidator;
 
 interface RuleInterface
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Blurpa\EasyValidator\Rules;
+namespace NickStuer\EasyValidator\Rules;
 
-use Blurpa\EasyValidator\Rule;
-use Blurpa\EasyValidator\RuleInterface;
+use \NickStuer\EasyValidator\Rule;
+use \NickStuer\EasyValidator\RuleInterface;
 
 class MaxLength extends Rule implements RuleInterface
 {

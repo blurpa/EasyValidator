@@ -1,5 +1,5 @@
 <?php
 
-namespace Blurpa\EasyValidator;
+namespace NickStuer\EasyValidator;
 
 class RuleNotFoundException extends \Exception {}

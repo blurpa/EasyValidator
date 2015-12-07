@@ -5,13 +5,13 @@ require __DIR__ . '/../vendor/autoload.php';
 class testRouter extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Blurpa\EasyValidator\Validator();
+     * @var \NickStuer\EasyValidator\Validator();
      */
     protected $v;
 
     protected function setUp()
     {
-        $this->v = new \Blurpa\EasyValidator\Validator();
+        $this->v = new \NickStuer\EasyValidator\Validator();
     }
 
 

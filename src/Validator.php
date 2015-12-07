@@ -1,9 +1,9 @@
 <?php
 
-namespace Blurpa\EasyValidator;
+namespace NickStuer\EasyValidator;
 
-use Blurpa\EasyValidator\RuleNotFoundException;
-use Blurpa\EasyValidator\Item;
+use \NickStuer\EasyValidator\RuleNotFoundException;
+use \NickStuer\EasyValidator\Item;
 
 class Validator
 {
