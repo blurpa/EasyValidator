@@ -1,9 +1,9 @@
 {
-    "name": "blurpa/easy-validator",
+    "name": "nickstuer/easy-validator",
     "type": "library",
     "description": "A basic and easy to use validation library for PHP",
     "keywords": ["validate", "validator", "validation"],
-    "homepage": "https://github.com/blurpa/EasyValidator",
+    "homepage": "https://github.com/nickstuer/EasyValidator",
     "license": "MIT",
     "authors": [
         {
@@ -21,7 +21,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Blurpa\\EasyValidator\\": "src/"
+            "NickStuer\\EasyValidator\\": "src/"
         }
     }
 }

@@ -108,14 +108,14 @@ class Validator
             return;
         }
 
-        $ruleName = '\Blurpa\EasyValidator\Rules\\' . $ruleName;
+        $ruleName = '\NickStuer\EasyValidator\Rules\\' . $ruleName;
 
         if (!class_exists($ruleName)) {
             throw new RuleNotFoundException;
         }
 
         /**
-         * @var \Blurpa\EasyValidator\RuleInterface $rule
+         * @var \NickStuer\EasyValidator\RuleInterface $rule
          */
         $rule = new $ruleName;
         if (!$rule->validate($item->getItemValue(), $options)) {
